@@ -1,0 +1,546 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXContainerItemProxy section */
+		56DC752E2D11AE68004238D2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 56DC75142D11AE67004238D2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 56DC751B2D11AE67004238D2;
+			remoteInfo = "todo-list-macos";
+		};
+		56DC75382D11AE68004238D2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 56DC75142D11AE67004238D2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 56DC751B2D11AE67004238D2;
+			remoteInfo = "todo-list-macos";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		56DC751C2D11AE67004238D2 /* todo-list-macos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "todo-list-macos.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		56DC752D2D11AE68004238D2 /* todo-list-macosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "todo-list-macosTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		56DC75372D11AE68004238D2 /* todo-list-macosUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "todo-list-macosUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		56DC751E2D11AE67004238D2 /* todo-list-macos */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "todo-list-macos";
+			sourceTree = "<group>";
+		};
+		56DC75302D11AE68004238D2 /* todo-list-macosTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "todo-list-macosTests";
+			sourceTree = "<group>";
+		};
+		56DC753A2D11AE68004238D2 /* todo-list-macosUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "todo-list-macosUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		56DC75192D11AE67004238D2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		56DC752A2D11AE68004238D2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		56DC75342D11AE68004238D2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		56DC75132D11AE67004238D2 = {
+			isa = PBXGroup;
+			children = (
+				56DC751E2D11AE67004238D2 /* todo-list-macos */,
+				56DC75302D11AE68004238D2 /* todo-list-macosTests */,
+				56DC753A2D11AE68004238D2 /* todo-list-macosUITests */,
+				56DC751D2D11AE67004238D2 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		56DC751D2D11AE67004238D2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				56DC751C2D11AE67004238D2 /* todo-list-macos.app */,
+				56DC752D2D11AE68004238D2 /* todo-list-macosTests.xctest */,
+				56DC75372D11AE68004238D2 /* todo-list-macosUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		56DC751B2D11AE67004238D2 /* todo-list-macos */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 56DC75412D11AE68004238D2 /* Build configuration list for PBXNativeTarget "todo-list-macos" */;
+			buildPhases = (
+				56DC75182D11AE67004238D2 /* Sources */,
+				56DC75192D11AE67004238D2 /* Frameworks */,
+				56DC751A2D11AE67004238D2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				56DC751E2D11AE67004238D2 /* todo-list-macos */,
+			);
+			name = "todo-list-macos";
+			packageProductDependencies = (
+			);
+			productName = "todo-list-macos";
+			productReference = 56DC751C2D11AE67004238D2 /* todo-list-macos.app */;
+			productType = "com.apple.product-type.application";
+		};
+		56DC752C2D11AE68004238D2 /* todo-list-macosTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 56DC75442D11AE68004238D2 /* Build configuration list for PBXNativeTarget "todo-list-macosTests" */;
+			buildPhases = (
+				56DC75292D11AE68004238D2 /* Sources */,
+				56DC752A2D11AE68004238D2 /* Frameworks */,
+				56DC752B2D11AE68004238D2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				56DC752F2D11AE68004238D2 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				56DC75302D11AE68004238D2 /* todo-list-macosTests */,
+			);
+			name = "todo-list-macosTests";
+			packageProductDependencies = (
+			);
+			productName = "todo-list-macosTests";
+			productReference = 56DC752D2D11AE68004238D2 /* todo-list-macosTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		56DC75362D11AE68004238D2 /* todo-list-macosUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 56DC75472D11AE68004238D2 /* Build configuration list for PBXNativeTarget "todo-list-macosUITests" */;
+			buildPhases = (
+				56DC75332D11AE68004238D2 /* Sources */,
+				56DC75342D11AE68004238D2 /* Frameworks */,
+				56DC75352D11AE68004238D2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				56DC75392D11AE68004238D2 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				56DC753A2D11AE68004238D2 /* todo-list-macosUITests */,
+			);
+			name = "todo-list-macosUITests";
+			packageProductDependencies = (
+			);
+			productName = "todo-list-macosUITests";
+			productReference = 56DC75372D11AE68004238D2 /* todo-list-macosUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		56DC75142D11AE67004238D2 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1620;
+				LastUpgradeCheck = 1620;
+				TargetAttributes = {
+					56DC751B2D11AE67004238D2 = {
+						CreatedOnToolsVersion = 16.2;
+					};
+					56DC752C2D11AE68004238D2 = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = 56DC751B2D11AE67004238D2;
+					};
+					56DC75362D11AE68004238D2 = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = 56DC751B2D11AE67004238D2;
+					};
+				};
+			};
+			buildConfigurationList = 56DC75172D11AE67004238D2 /* Build configuration list for PBXProject "todo-list-macos" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 56DC75132D11AE67004238D2;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 56DC751D2D11AE67004238D2 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				56DC751B2D11AE67004238D2 /* todo-list-macos */,
+				56DC752C2D11AE68004238D2 /* todo-list-macosTests */,
+				56DC75362D11AE68004238D2 /* todo-list-macosUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		56DC751A2D11AE67004238D2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		56DC752B2D11AE68004238D2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		56DC75352D11AE68004238D2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		56DC75182D11AE67004238D2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		56DC75292D11AE68004238D2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		56DC75332D11AE68004238D2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		56DC752F2D11AE68004238D2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 56DC751B2D11AE67004238D2 /* todo-list-macos */;
+			targetProxy = 56DC752E2D11AE68004238D2 /* PBXContainerItemProxy */;
+		};
+		56DC75392D11AE68004238D2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 56DC751B2D11AE67004238D2 /* todo-list-macos */;
+			targetProxy = 56DC75382D11AE68004238D2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		56DC753F2D11AE68004238D2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		56DC75402D11AE68004238D2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		56DC75422D11AE68004238D2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "todo-list-macos/todo_list_macos.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"todo-list-macos/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "bloomca.todo-list-macos";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		56DC75432D11AE68004238D2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "todo-list-macos/todo_list_macos.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"todo-list-macos/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "bloomca.todo-list-macos";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		56DC75452D11AE68004238D2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "bloomca.todo-list-macosTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/todo-list-macos.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/todo-list-macos";
+			};
+			name = Debug;
+		};
+		56DC75462D11AE68004238D2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "bloomca.todo-list-macosTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/todo-list-macos.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/todo-list-macos";
+			};
+			name = Release;
+		};
+		56DC75482D11AE68004238D2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "bloomca.todo-list-macosUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "todo-list-macos";
+			};
+			name = Debug;
+		};
+		56DC75492D11AE68004238D2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "bloomca.todo-list-macosUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "todo-list-macos";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		56DC75172D11AE67004238D2 /* Build configuration list for PBXProject "todo-list-macos" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				56DC753F2D11AE68004238D2 /* Debug */,
+				56DC75402D11AE68004238D2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		56DC75412D11AE68004238D2 /* Build configuration list for PBXNativeTarget "todo-list-macos" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				56DC75422D11AE68004238D2 /* Debug */,
+				56DC75432D11AE68004238D2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		56DC75442D11AE68004238D2 /* Build configuration list for PBXNativeTarget "todo-list-macosTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				56DC75452D11AE68004238D2 /* Debug */,
+				56DC75462D11AE68004238D2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		56DC75472D11AE68004238D2 /* Build configuration list for PBXNativeTarget "todo-list-macosUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				56DC75482D11AE68004238D2 /* Debug */,
+				56DC75492D11AE68004238D2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 56DC75142D11AE67004238D2 /* Project object */;
+}
