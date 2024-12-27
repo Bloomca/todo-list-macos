@@ -1,5 +1,5 @@
 //
-//  LoginView.swift
+//  SignupView.swift
 //  todo-list-macos
 //
 //  Created by Vsevolod Zaikov on 12/26/24.
@@ -7,7 +7,10 @@
 
 import SwiftUI
 
-struct LoginView: View {
+struct SignupView: View {
+    @EnvironmentObject var router: Router
+    @EnvironmentObject var authStore: AuthStore
+    
     @State private var username: String = ""
     @State private var password: String = ""
     
@@ -16,7 +19,7 @@ struct LoginView: View {
     
     var body: some View {
         VStack {
-            Text("Log in to your account")
+            Text("Signup")
                 .font(.largeTitle)
             
             TextField("Username", text: $username)
@@ -27,30 +30,45 @@ struct LoginView: View {
                 .textFieldStyle(.roundedBorder)
             
             if loginError != nil {
-                Text("Login failed")
+                Text("Signup failed")
                     .foregroundStyle(.red)
             }
             
-            Button("Log in") {
+            Button("Signup") {
                 Task {
                     let service = FetchService()
                     do {
                         loginError = nil
                         isLoading = true
-                        let token = try await service.login(username: "user", password: "pass")
+                        let token = try await service.signup(
+                            username: username, password: password)
                         isLoading = false
-                        // Store the token or handle successful login
+                        // Store the token or handle successful singup
                         print(token)
+                        authStore.setToken(token)
+                        router.navigate(to: .app)
                     } catch {
                         isLoading = false
                         loginError = error
                         // Handle error
-                        print("Login failed: \(error)")
+                        print("Signup failed: \(error)")
                     }
                 }
             }
             .font(.headline)
             .disabled(isLoading)
+            
+            HStack {
+                Text("Already have an account?")
+                    .foregroundColor(.secondary)
+                Button("Login") {
+                    router.navigate(to: .login)
+                }
+                .buttonStyle(.plain)
+                .foregroundStyle(.blue)
+                .underline(true)
+            }
+            
                 
         }
         .padding()
@@ -58,5 +76,5 @@ struct LoginView: View {
 }
 
 #Preview {
-    LoginView()
+    SignupView()
 }

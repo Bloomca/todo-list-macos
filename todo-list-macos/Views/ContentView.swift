@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject private var route: Router = Router()
+    @EnvironmentObject var router: Router
     
     var body: some View {
         VStack {
-            switch route.path {
+            switch router.path {
             case .login:
                 LoginView()
             case .signup:
@@ -21,8 +21,6 @@ struct ContentView: View {
                 AppView()
             }
         }
-        .padding()
-        .frame(width: 640, height: 480)
     }
 }
 

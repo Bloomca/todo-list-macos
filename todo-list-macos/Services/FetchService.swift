@@ -16,6 +16,11 @@ struct AuthResponse: Decodable {
     let token: String
 }
 
+struct CreateProjectRequest: Encodable {
+    let name: String
+    let description: String
+}
+
 struct FetchService {
     let baseURL = URL(string: "https://todo-list-api.bloomca.me")!
     
@@ -66,7 +71,6 @@ struct FetchService {
         }
         
         let result = try JSONDecoder().decode(AuthResponse.self, from: data)
-
         
         return result.token
     }
@@ -77,7 +81,6 @@ struct FetchService {
         var request = URLRequest(url: healthURL)
         request.httpMethod = "GET"
         
-        // Add some debug prints
         print("Attempting to connect to: \(healthURL)")
         
         let (_, response) = try await URLSession.shared.data(for: request)
@@ -93,5 +96,54 @@ struct FetchService {
             print("Unexpected status code: \(httpResponse.statusCode)")
             throw URLError(.badServerResponse)
         }
+    }
+    
+    func createProject(token: String, name: String, description: String) async throws -> Project {
+        let createProjectURL = baseURL.appendingPathComponent("projects")
+        
+        var request = URLRequest(url: createProjectURL)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        
+        let body = CreateProjectRequest(name: name, description: description)
+        request.httpBody = try JSONEncoder().encode(body)
+     
+        let (data, response) = try await URLSession.shared.data(for: request)
+        
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw URLError(.badServerResponse)
+        }
+        
+        guard httpResponse.statusCode == 201 else {
+            throw URLError(.badURL)
+        }
+        
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        
+        return try decoder.decode(Project.self, from: data)
+    }
+    
+    func getProjects(token: String) async throws -> [Project] {
+        let projectsURL = baseURL.appendingPathComponent("projects")
+        var request = URLRequest(url: projectsURL)
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        request.httpMethod = "GET"
+        
+        let (data, response) = try await URLSession.shared.data(for: request)
+        
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw URLError(.badServerResponse)
+        }
+        
+        guard httpResponse.statusCode == 200 else {
+            throw URLError(.badURL)
+        }
+        
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        
+        return try decoder.decode([Project].self, from: data)
     }
 }

@@ -11,7 +11,8 @@ import SwiftUI
 struct todo_list_macosApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainView()
         }
+        .windowStyle(.hiddenTitleBar)
     }
 }
