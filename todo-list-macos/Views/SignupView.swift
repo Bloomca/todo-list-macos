@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SignupView: View {
+struct SignupView: View {    
     @EnvironmentObject var router: Router
     @EnvironmentObject var authStore: AuthStore
     
@@ -36,11 +36,10 @@ struct SignupView: View {
             
             Button("Signup") {
                 Task {
-                    let service = FetchService()
                     do {
                         loginError = nil
                         isLoading = true
-                        let token = try await service.signup(
+                        let token = try await authNetworkService.signup(
                             username: username, password: password)
                         isLoading = false
                         // Store the token or handle successful singup

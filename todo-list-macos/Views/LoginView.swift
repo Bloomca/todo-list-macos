@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct LoginView: View {
+struct LoginView: View {    
     @EnvironmentObject var router: Router
     @EnvironmentObject var authStore: AuthStore
     
@@ -36,11 +36,10 @@ struct LoginView: View {
             
             Button("Log in") {
                 Task {
-                    let service = FetchService()
                     do {
                         loginError = nil
                         isLoading = true
-                        let token = try await service.login(
+                        let token = try await authNetworkService.login(
                             username: username,
                             password: password)
                         isLoading = false
