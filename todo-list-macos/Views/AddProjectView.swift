@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct AddProjectView: View {
-    @EnvironmentObject var authStore: AuthStore
     @EnvironmentObject var projectStore: ProjectStore
     
     @Binding var selectedId: Int?
@@ -42,14 +41,14 @@ struct AddProjectView: View {
                     addingNewProject = false
                 }
                 .buttonStyle(.borderedProminent)
+                .tint(.gray.opacity(0.5))
+
                 Button("Create") {
                     Task {
                         do {
                             creatingProjectError = nil
                             isCreatingProject = true
-                            let token = try authStore.getToken()
                             let project = try await projectStore.createProject(
-                                token: token,
                                 name: projectName,
                                 description: projectDescription)
                             
@@ -63,9 +62,10 @@ struct AddProjectView: View {
                         }
                     }
                 }
+                .buttonStyle(.borderedProminent)
                 .disabled(isCreatingProject)
-                .padding(.bottom, 10)
             }
+            .padding(.bottom, 10)
         }
         .padding()
     }

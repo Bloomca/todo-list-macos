@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct AppView: View {
-    @EnvironmentObject var authStore: AuthStore
     @EnvironmentObject var projectStore: ProjectStore
     
     @State private var selectedProject: Int?
@@ -54,12 +53,7 @@ struct AppView: View {
         }
         .onAppear {
             Task {
-                do {
-                    let token = try authStore.getToken()
-                    await projectStore.fetchProjects(token: token)
-                } catch {
-                    // ignore the token error here
-                }
+                await projectStore.fetchProjects()
             }
         }
     }

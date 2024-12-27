@@ -17,18 +17,26 @@ struct Project: Decodable, Identifiable {
 
 @MainActor
 class ProjectStore: ObservableObject {
+    // dependencies
+    private var authStore: AuthStore
+    
     private var isLoaded: Bool = false
     @Published var isLoading: Bool = false
     @Published var fetchError: Error? = nil
     @Published var projectsById: [Int: Project] = [:]
     
-    func fetchProjects(token: String) async {
+    init(authStore: AuthStore) {
+        self.authStore = authStore
+    }
+    
+    func fetchProjects() async {
         if (isLoaded) { return }
         if (isLoading) { return }
         
         let fetchService = FetchService()
         
         do {
+            let token = try authStore.getToken()
             isLoading = true
             let projects = try await fetchService.getProjects(token: token)
             isLoading = false
@@ -41,9 +49,9 @@ class ProjectStore: ObservableObject {
         }
     }
     
-    func createProject(token: String, name: String, description: String) async throws -> Project {
+    func createProject(name: String, description: String) async throws -> Project {
         let fetchService = FetchService()
-        
+        let token = try authStore.getToken()
         let project = try await fetchService.createProject(token: token, name: name, description: description)
         
         projectsById[project.id] = project
@@ -54,6 +62,4 @@ class ProjectStore: ObservableObject {
     func getProjects() -> [Project] {
         Array(projectsById.values)
     }
-    
-    
 }
