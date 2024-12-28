@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Project: NetworkResponse, Decodable, Identifiable {
+struct Project: NetworkResponse, Identifiable {
     let id: Int
     let name: String
     let description: String
@@ -20,7 +20,7 @@ class ProjectStore: ObservableObject {
     // dependencies
     private var authStore: AuthStore
     
-    private var isLoaded: Bool = false
+    var isLoaded: Bool = false
     @Published var isLoading: Bool = false
     @Published var fetchError: Error? = nil
     @Published var projectsById: [Int: Project] = [:]

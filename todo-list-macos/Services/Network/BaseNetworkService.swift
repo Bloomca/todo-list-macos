@@ -32,6 +32,22 @@ struct HealthResponse: NetworkResponse {
     let status: String
 }
 
+extension URL {
+    func appendingQueryParameters(_ parameters: [String: Any]) -> URL {
+        var components = URLComponents(url: self, resolvingAgainstBaseURL: true)!
+        let queryItems = parameters.map { key, value in
+            URLQueryItem(name: key, value: String(describing: value))
+        }
+        // Append to existing query items if any
+        if components.queryItems == nil {
+            components.queryItems = queryItems
+        } else {
+            components.queryItems?.append(contentsOf: queryItems)
+        }
+        return components.url!
+    }
+}
+
 class BaseNetworkService {
     let baseURL: URL
     
@@ -41,18 +57,21 @@ class BaseNetworkService {
     
     func request<T: NetworkRequest, Response: NetworkResponse>(
         path: String,
+        queryParameters: [String: Any] = [:],
         method: NetworkMethod,
         body: T?,
         expectedCode: Int,
         token: String? = nil
     ) async throws -> Response {
-        var request = URLRequest(url: baseURL.appendingPathComponent(path))
+        var request = URLRequest(url: baseURL.appendingPathComponent(path).appendingQueryParameters(queryParameters))
         request.httpMethod = method.rawValue
         
         if body != nil {
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             do {
-                request.httpBody = try JSONEncoder().encode(body)
+                let encoder = JSONEncoder()
+                encoder.keyEncodingStrategy = .convertToSnakeCase
+                request.httpBody = try encoder.encode(body)
             }
         }
         
@@ -60,11 +79,15 @@ class BaseNetworkService {
             request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
         
+        print("Making a request to \(request.url!.absoluteString)")
+        
         let (data, response) = try await URLSession.shared.data(for: request)
         
         guard let httpResponse = response as? HTTPURLResponse else {
             throw URLError(.badServerResponse)
         }
+        
+        print("Received response with status \(httpResponse.statusCode)")
         
         guard httpResponse.statusCode == expectedCode else {
             throw NetworkError.unexpectedStatusCode(httpResponse.statusCode)

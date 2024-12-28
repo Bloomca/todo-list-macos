@@ -14,14 +14,20 @@ struct AppView: View {
     @State private var addingNewProject: Bool = false
     
     private var projects: [Project] { projectStore.getProjects() }
+    private var isLoading: Bool { projectStore.isLoading }
+    private var noProjects: Bool { projectStore.isLoaded && projects.isEmpty }
     
     var body: some View {
         NavigationSplitView {
             List(selection: $selectedProject) {
                 Section("List of projects") {
                     
-                    if projects.isEmpty {
+                    if noProjects {
                         Text("No projects yet. Create one!")
+                    }
+                    
+                    if isLoading {
+                        LoaderView()
                     }
                     
                     ForEach(projects) { project in
@@ -41,8 +47,8 @@ struct AppView: View {
             }
             .listStyle(.sidebar)
         } detail: {
-            if let selection = selectedProject {
-                Text("You selected \(selection)")
+            if let projectId = selectedProject {
+                ProjectView(projectId: projectId)
             } else {
                 Text("No project selected")
             }

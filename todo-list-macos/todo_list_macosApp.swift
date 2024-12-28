@@ -12,14 +12,14 @@ struct todo_list_macosApp: App {
     @StateObject private var router: Router
     @StateObject private var authStore: AuthStore
     @StateObject private var projectStore: ProjectStore
+    @StateObject private var taskStore: TaskStore
     
     init() {
         let authStore = AuthStore()
         _router = StateObject(wrappedValue: Router())
         _authStore = StateObject(wrappedValue: authStore)
-        _projectStore = StateObject(wrappedValue: ProjectStore(
-            authStore: authStore
-        ))
+        _projectStore = StateObject(wrappedValue: ProjectStore(authStore: authStore))
+        _taskStore = StateObject(wrappedValue: TaskStore(authStore: authStore))
     }
     
     var body: some Scene {
@@ -28,6 +28,7 @@ struct todo_list_macosApp: App {
                 .environmentObject(router)
                 .environmentObject(authStore)
                 .environmentObject(projectStore)
+                .environmentObject(taskStore)
         }
         .windowStyle(.hiddenTitleBar)
     }
