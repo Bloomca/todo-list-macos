@@ -38,6 +38,7 @@ struct TaskEditor: View {
                             isSaving = true
                             savingError = nil
                             try await taskStore.createTask(projectId: projectId,
+                                                           sectionId: sectionId,
                                                            name: taskName,
                                                            description: taskDescription)
                             isSaving = false
@@ -61,11 +62,12 @@ struct InlineTaskEditor: View {
     @State var isPresented: Bool = false
     
     var projectId: Int
+    var sectionId: Int? = nil
     
     var body: some View {
         VStack {
             if isPresented {
-                TaskEditor(isPresented: $isPresented, projectId: projectId)
+                TaskEditor(isPresented: $isPresented, projectId: projectId, sectionId: sectionId)
             } else {
                 Button {
                     isPresented = true
