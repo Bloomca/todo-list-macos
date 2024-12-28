@@ -9,6 +9,7 @@ import Foundation
 
 struct CreateTaskRequest: NetworkRequest {
     let projectId: Int
+    let sectionId: Int?
     let name: String
     let description: String
 }
@@ -32,8 +33,8 @@ struct TaskNetworkService {
         return tasks
     }
     
-    func createTask(token: String, projectId: Int, name: String, description: String = "") async throws -> TaskEntity {
-        let request = CreateTaskRequest(projectId: projectId, name: name, description: description)
+    func createTask(token: String, projectId: Int, sectionId: Int?, name: String, description: String = "") async throws -> TaskEntity {
+        let request = CreateTaskRequest(projectId: projectId, sectionId: sectionId, name: name, description: description)
         let createdTask: TaskEntity = try await baseNetworkService.request(
             path: "/tasks",
             method: .post,

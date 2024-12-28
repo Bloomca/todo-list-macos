@@ -17,13 +17,6 @@ struct TaskEntity: NetworkResponse, Identifiable {
     let isArchived: Bool
 }
 
-class TaskData {
-    var isLoading: Bool = false
-    var isLoaded: Bool = false
-    var fetchError: Error? = nil
-    var tasks: [TaskEntity] = []
-}
-
 @MainActor
 class TaskStore: ObservableObject {
     // dependencies
@@ -58,10 +51,11 @@ class TaskStore: ObservableObject {
         }
     }
     
-    func createTask(projectId: Int, name: String, description: String) async throws {
+    func createTask(projectId: Int, sectionId: Int?, name: String, description: String) async throws {
         let token = try authStore.getToken()
         let newTask = try await taskNetworkService.createTask(token: token,
                                                               projectId: projectId,
+                                                              sectionId: sectionId,
                                                               name: name,
                                                               description: description)
         

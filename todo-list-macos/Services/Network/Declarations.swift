@@ -11,3 +11,4 @@ let baseService = BaseNetworkService(baseURL: URL(string: "https://todo-list-api
 let authNetworkService = AuthNetworkService(baseNetworkService: baseService)
 let projectNetworkService = ProjectNetworkService(baseNetworkService: baseService)
 let taskNetworkService = TaskNetworkService(baseNetworkService: baseService)
+let sectionNetworkService = SectionNetworkService(baseNetworkService: baseService)
