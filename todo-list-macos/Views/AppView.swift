@@ -18,7 +18,7 @@ struct AppView: View {
     private var currentTitle: String {
         if let selectedProject,
            let project = projectStore.projectsById[selectedProject] {
-            return project.isArchived ? "\(project.name) (archived)" : project.name
+            return project.archivedAt != nil ? "\(project.name) (archived)" : project.name
         } else {
             return ""
         }

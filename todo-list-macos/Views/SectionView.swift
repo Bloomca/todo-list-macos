@@ -37,14 +37,14 @@ struct SectionView: View {
                     Divider()
                 }
                 
-                if !section.isArchived {
+                if section.archivedAt == nil {
                     InlineTaskEditor(projectId: section.projectId, sectionId: section.id)
                         .padding(.bottom, 8)
                 }
                 
             }
             
-            if !section.isArchived {
+            if section.archivedAt == nil {
                 InlineSectionEditor(projectId: section.projectId)
             }
         }
