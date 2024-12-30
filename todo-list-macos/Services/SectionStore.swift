@@ -12,6 +12,7 @@ struct SectionEntity: NetworkResponse, Identifiable {
     let projectId: Int
     let name: String
     let isArchived: Bool
+    let createdAt: String
 }
 
 @MainActor
@@ -56,5 +57,9 @@ class SectionStore: ObservableObject {
             name: name)
         
         sections.append(newSection)
+    }
+    
+    func onProjectDelete(projectId: Int) {
+        self.sections.removeAll { $0.projectId == projectId }
     }
 }

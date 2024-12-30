@@ -14,6 +14,7 @@ protocol NetworkResponse: Decodable {}
 extension Array: NetworkResponse where Element: NetworkResponse {}
 
 struct EmptyBody: NetworkRequest {}
+struct EmptyResponse: NetworkResponse {}
 
 enum NetworkMethod: String {
     case get = "GET"
@@ -26,6 +27,7 @@ enum NetworkError: Error {
     case invalidResponse
     case unexpectedStatusCode(Int)
     case decodingError(Error)
+    case emptyResponseData
 }
 
 struct HealthResponse: NetworkResponse {
@@ -79,7 +81,7 @@ class BaseNetworkService {
             request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
         
-        print("Making a request to \(request.url!.absoluteString)")
+        print("Making a request to \(request.url!.absoluteString) with method \(method.rawValue)")
         
         let (data, response) = try await URLSession.shared.data(for: request)
         
@@ -91,6 +93,17 @@ class BaseNetworkService {
         
         guard httpResponse.statusCode == expectedCode else {
             throw NetworkError.unexpectedStatusCode(httpResponse.statusCode)
+        }
+        
+        if Response.self is EmptyResponse.Type {
+            // If it's an empty response type, just return it
+            return EmptyResponse() as! Response
+        }
+        
+        guard !data.isEmpty else {
+            // If data is empty but we expected a response, throw an error
+            // Unless the response type is EmptyResponse
+            throw NetworkError.emptyResponseData
         }
         
         let decoder = JSONDecoder()

@@ -20,7 +20,6 @@ struct ProjectNetworkService {
     }
     
     func getProjects(token: String) async throws -> [Project] {
-        
         let projects: [Project] = try await baseNetworkService.request(
             path: "/projects",
             method: .get,
@@ -42,5 +41,14 @@ struct ProjectNetworkService {
             token: token)
         
         return response
+    }
+    
+    func deleteProject(token: String, projectId: Int) async throws {
+        let response: EmptyResponse = try await baseNetworkService.request(
+            path: "/projects/\(projectId)",
+            method: NetworkMethod.delete,
+            body: nil as EmptyBody?,
+            expectedCode: 204,
+            token: token)
     }
 }
