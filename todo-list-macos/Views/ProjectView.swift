@@ -22,7 +22,7 @@ struct ProjectView: View {
     var sections: [SectionEntity] { sectionStore.sections.filter { $0.projectId == projectId } }
     
     var body: some View {
-        if project != nil {
+        if let project {
             VStack(spacing: 0) {
                 Spacer()
                     .frame(height: 16)
@@ -38,10 +38,12 @@ struct ProjectView: View {
                                 Divider()
                             }
                             
-                            InlineTaskEditor(projectId: projectId)
-                                .padding(.bottom, 8)
-                            
-                            InlineSectionEditor(projectId: projectId)
+                            if !project.isArchived {
+                                InlineTaskEditor(projectId: projectId)
+                                    .padding(.bottom, 8)
+                                
+                                InlineSectionEditor(projectId: projectId)
+                            }
                             
                             ForEach(sections) { section in
                                 SectionView(section: section)

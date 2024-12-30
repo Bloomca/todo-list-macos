@@ -37,11 +37,16 @@ struct SectionView: View {
                     Divider()
                 }
                 
-                InlineTaskEditor(projectId: section.projectId, sectionId: section.id)
-                    .padding(.bottom, 8)
+                if !section.isArchived {
+                    InlineTaskEditor(projectId: section.projectId, sectionId: section.id)
+                        .padding(.bottom, 8)
+                }
+                
             }
             
-            InlineSectionEditor(projectId: section.projectId)
+            if !section.isArchived {
+                InlineSectionEditor(projectId: section.projectId)
+            }
         }
     }
 }

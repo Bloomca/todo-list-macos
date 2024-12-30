@@ -13,6 +13,22 @@ struct Project: NetworkResponse, Identifiable {
     let description: String
     let isArchived: Bool
     let createdAt: String
+    
+    func copyWith(
+        id: Int? = nil,
+        name: String? = nil,
+        description: String? = nil,
+        isArchived: Bool? = nil,
+        createdAt: String? = nil
+    ) -> Project {
+        Project(
+            id: id ?? self.id,
+            name: name ?? self.name,
+            description: description ?? self.description,
+            isArchived: isArchived ?? self.isArchived,
+            createdAt: createdAt ?? self.createdAt
+        )
+    }
 }
 
 @MainActor
@@ -65,7 +81,25 @@ class ProjectStore: ObservableObject {
         projectsById.removeValue(forKey: projectId)
     }
     
+    func archiveProject(projectId: Int, onArchive: () -> Void) async throws {
+        let token = try authStore.getToken()
+        try await projectNetworkService.updateProject(
+            token: token, projectId: projectId, isArchived: true)
+        
+        onArchive()
+        
+        let currentProject = projectsById[projectId]
+        if let currentProject {
+            projectsById[projectId] = currentProject.copyWith(isArchived: true)
+        }
+    }
+
     func getProjects() -> [Project] {
-        Array(projectsById.values).sorted { $0.createdAt < $1.createdAt }
+        Array(projectsById.values).filter { !$0.isArchived }.sorted { $0.createdAt < $1.createdAt }
+    }
+    
+    func getArchivedProjects() -> [Project] {
+        // ideally, we should add `archivedAt` field. This sorting is just to have consistent order
+        Array(projectsById.values).filter(\.isArchived).sorted { $0.createdAt < $1.createdAt }
     }
 }
