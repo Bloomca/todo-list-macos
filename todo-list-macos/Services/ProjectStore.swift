@@ -11,21 +11,21 @@ struct Project: NetworkResponse, Identifiable {
     let id: Int
     let name: String
     let description: String
-    let isArchived: Bool
+    let archivedAt: String?
     let createdAt: String
     
     func copyWith(
         id: Int? = nil,
         name: String? = nil,
         description: String? = nil,
-        isArchived: Bool? = nil,
+        archivedAt: String? = nil,
         createdAt: String? = nil
     ) -> Project {
         Project(
             id: id ?? self.id,
             name: name ?? self.name,
             description: description ?? self.description,
-            isArchived: isArchived ?? self.isArchived,
+            archivedAt: archivedAt ?? self.archivedAt,
             createdAt: createdAt ?? self.createdAt
         )
     }
@@ -81,25 +81,23 @@ class ProjectStore: ObservableObject {
         projectsById.removeValue(forKey: projectId)
     }
     
-    func archiveProject(projectId: Int, onArchive: () -> Void) async throws {
+    func archiveProject(projectId: Int) async throws {
         let token = try authStore.getToken()
         try await projectNetworkService.updateProject(
             token: token, projectId: projectId, isArchived: true)
         
-        onArchive()
-        
         let currentProject = projectsById[projectId]
         if let currentProject {
-            projectsById[projectId] = currentProject.copyWith(isArchived: true)
+            projectsById[projectId] = currentProject.copyWith(archivedAt: "2024-12-31")
         }
     }
 
     func getProjects() -> [Project] {
-        Array(projectsById.values).filter { !$0.isArchived }.sorted { $0.createdAt < $1.createdAt }
+        Array(projectsById.values).filter { $0.archivedAt == nil }.sorted { $0.createdAt < $1.createdAt }
     }
     
     func getArchivedProjects() -> [Project] {
         // ideally, we should add `archivedAt` field. This sorting is just to have consistent order
-        Array(projectsById.values).filter(\.isArchived).sorted { $0.createdAt < $1.createdAt }
+        Array(projectsById.values).filter { $0.archivedAt != nil }.sorted { $0.createdAt < $1.createdAt }
     }
 }

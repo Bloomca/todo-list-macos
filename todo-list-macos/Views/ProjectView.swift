@@ -38,7 +38,7 @@ struct ProjectView: View {
                                 Divider()
                             }
                             
-                            if !project.isArchived {
+                            if project.archivedAt == nil {
                                 InlineTaskEditor(projectId: projectId)
                                     .padding(.bottom, 8)
                                 

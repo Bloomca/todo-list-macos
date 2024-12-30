@@ -32,7 +32,7 @@ struct ProjectActionsView: View {
                     Image(systemName: "trash")
                 }
                 .buttonStyle(CustomIconButtonStyle())
-                if project.isArchived {
+                if project.archivedAt != nil {
                     Button {
                         // TODO: add unarchiving
                         
@@ -102,10 +102,7 @@ struct ProjectActionsView: View {
                         Task {
                             do {
                                 archivingError = nil
-                                try await projectStore.archiveProject(projectId: projectId) {
-                                    sectionStore.onProjectArchive(projectId: projectId)
-                                    taskStore.onProjectArchive(projectId: projectId)
-                                }
+                                try await projectStore.archiveProject(projectId: projectId)
                                 archivingProject = false
                             } catch {
                                 archivingError = error
