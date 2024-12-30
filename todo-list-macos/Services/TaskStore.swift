@@ -15,6 +15,7 @@ struct TaskEntity: NetworkResponse, Identifiable {
     let description: String
     let isCompleted: Bool
     let isArchived: Bool
+    let createdAt: String
 }
 
 @MainActor
@@ -60,5 +61,9 @@ class TaskStore: ObservableObject {
                                                               description: description)
         
         tasks.append(newTask)
+    }
+    
+    func onProjectDelete(projectId: Int) {
+        self.tasks.removeAll { $0.projectId == projectId }
     }
 }

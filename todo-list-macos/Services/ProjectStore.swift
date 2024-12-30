@@ -56,7 +56,16 @@ class ProjectStore: ObservableObject {
         return project
     }
     
+    func deleteProject(projectId: Int, onDelete: () -> Void) async throws {
+        let token = try authStore.getToken()
+        try await projectNetworkService.deleteProject(token: token, projectId: projectId)
+        
+        // execute on delete callback like navigating away from the view first
+        onDelete()
+        projectsById.removeValue(forKey: projectId)
+    }
+    
     func getProjects() -> [Project] {
-        Array(projectsById.values)
+        Array(projectsById.values).sorted { $0.createdAt < $1.createdAt }
     }
 }

@@ -14,6 +14,13 @@ struct AppView: View {
     @State private var addingNewProject: Bool = false
     
     private var projects: [Project] { projectStore.getProjects() }
+    private var currentTitle: String {
+        if let selectedProject {
+            return projectStore.projectsById[selectedProject]?.name ?? ""
+        } else {
+            return ""
+        }
+    }
     private var isLoading: Bool { projectStore.isLoading }
     private var noProjects: Bool { projectStore.isLoaded && projects.isEmpty }
     
@@ -31,8 +38,14 @@ struct AppView: View {
                     }
                     
                     ForEach(projects) { project in
-                        NavigationLink(value: 1) {
-                            Label(project.name, systemImage: "gauge")
+                        NavigationLink(value: project.id) {
+                            HStack {
+                                Text(project.name)
+                                    .fontWeight(.bold)
+                                Spacer()
+                                Image(systemName: "ellipsis")
+                                    .font(.caption)
+                            }
                         }
                     }
                 }
@@ -53,6 +66,34 @@ struct AppView: View {
                 Text("No project selected")
             }
         }
+        .toolbar {
+            ToolbarItem(placement: .navigation) {
+                HStack {
+                    Image(systemName: "arrowtriangle.left")
+                        .opacity(0.8)
+                        .disabled(true)
+                    Image(systemName: "arrowtriangle.right")
+                        .opacity(0.8)
+                        .disabled(true)
+                }
+            }
+            
+            ToolbarItem(placement: .secondaryAction) {
+                if !currentTitle.isEmpty {
+                    Text(currentTitle)
+                        .font(.headline)
+                }
+            }
+            
+            if let currentProject = selectedProject {
+                ToolbarItem(placement: .primaryAction) {
+                    ProjectActionsView(projectId: currentProject) {
+                        selectedProject = nil
+                    }
+                }
+            }
+        }
+        .navigationTitle(currentTitle)
         .sheet(isPresented: $addingNewProject) {
             AddProjectView(selectedId: $selectedProject,
                            addingNewProject: $addingNewProject)

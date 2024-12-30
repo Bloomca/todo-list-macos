@@ -22,18 +22,8 @@ struct ProjectView: View {
     var sections: [SectionEntity] { sectionStore.sections.filter { $0.projectId == projectId } }
     
     var body: some View {
-        if let project {
+        if project != nil {
             VStack(spacing: 0) {
-                HStack {
-                    Text(project.name)
-                        .font(.title2)
-                    
-                    Spacer()
-                }
-                .padding(.horizontal)
-                .padding(.vertical, 8)
-                .background(.black.opacity(0.5))
-                
                 Spacer()
                     .frame(height: 16)
                 
