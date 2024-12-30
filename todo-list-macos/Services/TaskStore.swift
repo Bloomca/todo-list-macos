@@ -16,6 +16,28 @@ struct TaskEntity: NetworkResponse, Identifiable {
     let isCompleted: Bool
     let isArchived: Bool
     let createdAt: String
+    
+    func copyWith(
+        id: Int? = nil,
+        projectId: Int? = nil,
+        sectionId: Int? = nil,
+        name: String? = nil,
+        description: String? = nil,
+        isCompleted: Bool? = nil,
+        isArchived: Bool? = nil,
+        createdAt: String? = nil
+    ) -> TaskEntity {
+        TaskEntity(
+            id: id ?? self.id,
+            projectId: projectId ?? self.projectId,
+            sectionId: sectionId ?? self.sectionId,
+            name: name ?? self.name,
+            description: description ?? self.description,
+            isCompleted: isCompleted ?? self.isCompleted,
+            isArchived: isArchived ?? self.isArchived,
+            createdAt: createdAt ?? self.createdAt
+        )
+    }
 }
 
 @MainActor
@@ -65,5 +87,14 @@ class TaskStore: ObservableObject {
     
     func onProjectDelete(projectId: Int) {
         self.tasks.removeAll { $0.projectId == projectId }
+    }
+    
+    func onProjectArchive(projectId: Int) {
+        self.tasks = self.tasks.map { task in
+            guard task.projectId == projectId && !task.isArchived else {
+                return task
+            }
+            return task.copyWith(isArchived: true)
+        }
     }
 }

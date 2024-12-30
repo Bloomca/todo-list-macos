@@ -68,6 +68,7 @@ struct AddProjectView: View {
             .padding(.bottom, 10)
         }
         .padding()
+        .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 2)
     }
 }
 

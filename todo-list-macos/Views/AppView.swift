@@ -14,20 +14,23 @@ struct AppView: View {
     @State private var addingNewProject: Bool = false
     
     private var projects: [Project] { projectStore.getProjects() }
+    private var archivedProjects: [Project] { projectStore.getArchivedProjects() }
     private var currentTitle: String {
-        if let selectedProject {
-            return projectStore.projectsById[selectedProject]?.name ?? ""
+        if let selectedProject,
+           let project = projectStore.projectsById[selectedProject] {
+            return project.isArchived ? "\(project.name) (archived)" : project.name
         } else {
             return ""
         }
     }
     private var isLoading: Bool { projectStore.isLoading }
     private var noProjects: Bool { projectStore.isLoaded && projects.isEmpty }
+    private var noArchivedProjects: Bool { projectStore.isLoaded && archivedProjects.isEmpty }
     
     var body: some View {
         NavigationSplitView {
             List(selection: $selectedProject) {
-                Section("List of projects") {
+                Section("Projects") {
                     
                     if noProjects {
                         Text("No projects yet. Create one!")
@@ -39,12 +42,18 @@ struct AppView: View {
                     
                     ForEach(projects) { project in
                         NavigationLink(value: project.id) {
-                            HStack {
+                            Text(project.name)
+                                .fontWeight(.bold)
+                        }
+                    }
+                }
+                
+                if !isLoading && !noArchivedProjects {
+                    Section("Archived projects") {
+                        ForEach(archivedProjects) { project in
+                            NavigationLink(value: project.id) {
                                 Text(project.name)
                                     .fontWeight(.bold)
-                                Spacer()
-                                Image(systemName: "ellipsis")
-                                    .font(.caption)
                             }
                         }
                     }

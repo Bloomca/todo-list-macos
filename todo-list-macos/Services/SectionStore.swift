@@ -13,6 +13,22 @@ struct SectionEntity: NetworkResponse, Identifiable {
     let name: String
     let isArchived: Bool
     let createdAt: String
+    
+    func copyWith(
+        id: Int? = nil,
+        projectId: Int? = nil,
+        name: String? = nil,
+        isArchived: Bool? = nil,
+        createdAt: String? = nil
+    ) -> SectionEntity {
+        SectionEntity(
+            id: id ?? self.id,
+            projectId: projectId ?? self.projectId,
+            name: name ?? self.name,
+            isArchived: isArchived ?? self.isArchived,
+            createdAt: createdAt ?? self.createdAt
+        )
+    }
 }
 
 @MainActor
@@ -61,5 +77,14 @@ class SectionStore: ObservableObject {
     
     func onProjectDelete(projectId: Int) {
         self.sections.removeAll { $0.projectId == projectId }
+    }
+    
+    func onProjectArchive(projectId: Int) {
+        self.sections = self.sections.map { section in
+            guard section.projectId == projectId && !section.isArchived else {
+                return section
+            }
+            return section.copyWith(isArchived: true)
+        }
     }
 }

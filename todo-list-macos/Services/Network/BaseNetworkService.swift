@@ -68,6 +68,8 @@ class BaseNetworkService {
         var request = URLRequest(url: baseURL.appendingPathComponent(path).appendingQueryParameters(queryParameters))
         request.httpMethod = method.rawValue
         
+        print("Making a request to \(request.url!.absoluteString) with method \(method.rawValue)")
+        
         if body != nil {
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             do {
@@ -80,8 +82,6 @@ class BaseNetworkService {
         if let token = token {
             request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
-        
-        print("Making a request to \(request.url!.absoluteString) with method \(method.rawValue)")
         
         let (data, response) = try await URLSession.shared.data(for: request)
         
