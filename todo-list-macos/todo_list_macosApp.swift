@@ -26,7 +26,7 @@ struct todo_list_macosApp: App {
     
     var body: some Scene {
         WindowGroup {
-            MainView()
+            ContentView()
                 .environmentObject(router)
                 .environmentObject(authStore)
                 .environmentObject(projectStore)

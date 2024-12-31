@@ -18,6 +18,8 @@ struct ProjectActionsView: View {
     @State private var archivingProject: Bool = false
     @State private var archivingError: Error? = nil
     
+    @State private var editingProject: Bool = false
+    
     var projectId: Int
     var project: Project? { projectStore.projectsById[projectId] }
     
@@ -54,7 +56,7 @@ struct ProjectActionsView: View {
                     .buttonStyle(CustomIconButtonStyle())
                 }
                 Button {
-                    // pass
+                    editingProject = true
                 } label: {
                     Image(systemName: "pencil")
                 }
@@ -115,6 +117,9 @@ struct ProjectActionsView: View {
                         }
                     }
                 )
+            }
+            .sheet(isPresented: $editingProject) {
+                ProjectEditor(project: project)
             }
         } else {
             EmptyView()

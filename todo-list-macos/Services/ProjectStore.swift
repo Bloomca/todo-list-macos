@@ -7,6 +7,10 @@
 
 import Foundation
 
+enum ProjectStoreError: Error {
+    case genericError(message: String)
+}
+
 struct Project: NetworkResponse, Identifiable {
     let id: Int
     let name: String
@@ -110,6 +114,23 @@ class ProjectStore: ObservableObject {
         if let currentProject {
             projectsById[projectId] = currentProject.changeArchivedStatus(nil)
         }
+    }
+    
+    func updateProject(projectId: Int, name: String, description: String) async throws -> Project {
+        let token = try authStore.getToken()
+        
+        guard let currentProject = projectsById[projectId] else {
+            throw ProjectStoreError.genericError(message: "Project not found")
+        }
+        
+        try await projectNetworkService.updateProject(
+            token: token, projectId: projectId, name: name, description: description)
+        
+        
+        let updatedProject = currentProject.copyWith(name: name, description: description)
+        projectsById[projectId] = updatedProject
+        
+        return updatedProject
     }
     
     // Selectors
