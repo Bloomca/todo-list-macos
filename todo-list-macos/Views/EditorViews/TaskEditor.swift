@@ -21,16 +21,19 @@ struct TaskEditor: View {
     @State var savingError: Error? = nil
     
     var body: some View {
-        VStack {
+        VStack(spacing: 8) {
             TextField("Task name", text: $taskName)
-                .textFieldStyle(.roundedBorder)
+                .modifier(CustomTextField())
             TextField("Task description", text: $taskDescription)
-                .textFieldStyle(.roundedBorder)
+                .modifier(CustomTextField())
             
             HStack {
+                Spacer()
+                
                 Button("Cancel") {
                     isPresented = false
                 }
+                .buttonStyle(InlineSecondaryButton())
                 
                 Button("Save") {
                     Task {
@@ -50,11 +53,18 @@ struct TaskEditor: View {
                     }
                 }
                 .disabled(isSaving || taskName.isEmpty)
-                .buttonStyle(.borderedProminent)
+                .buttonStyle(InlinePrimaryButton())
             }
+            .padding(.top, 4)
             
         }
-        .border(.brown)
+        .padding(8)
+        .background(.background)
+        .overlay(
+            RoundedRectangle(cornerRadius: 8)
+                .stroke(.gray, lineWidth: 1)
+        )
+        .clipShape(RoundedRectangle(cornerRadius: 8))
     }
 }
 
@@ -76,5 +86,30 @@ struct InlineTaskEditor: View {
                 }
             }
         }
+        .padding(.top, 16)
+    }
+}
+
+struct InlineSecondaryButton: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .foregroundColor(.primary)
+            .padding(.horizontal, 16)
+            .padding(.vertical, 6)
+            .background(configuration.isPressed ? .gray : .gray.opacity(0.9))
+            .cornerRadius(6)
+    }
+}
+
+struct InlinePrimaryButton: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .foregroundColor(.white)
+            .padding(.horizontal, 16)
+            .padding(.vertical, 6)
+            .background(configuration.isPressed ?
+                Color.blue.opacity(0.8) :
+                Color.blue)
+            .cornerRadius(6)
     }
 }

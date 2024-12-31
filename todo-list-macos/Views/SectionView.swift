@@ -20,15 +20,19 @@ struct SectionView: View {
     var body: some View {
         LazyVStack(spacing: 0) {
             HStack {
-                Image(systemName: isCollapsed ? "chevron.right" : "chevron.down")
-                    .onTapGesture {
-                        isCollapsed.toggle()
-                    }
+                Button {
+                    isCollapsed.toggle()
+                } label: {
+                    Image(systemName: isCollapsed ? "chevron.right" : "chevron.down")
+                }
+                .buttonStyle(CustomIconButtonStyle())
+                .frame(width: 24, height: 24)
                 Text(section.name)
                     .font(.headline)
                     .underline()
                 Spacer()
             }
+            .padding(.leading, 4)
             
             if !isCollapsed {
                 ForEach(tasks) { task in

@@ -19,14 +19,15 @@ struct SectionEditor: View {
     @State var savingError: Error? = nil
     
     var body: some View {
-        VStack {
+        HStack(spacing: 8) {
             TextField("Section name", text: $sectionName)
-                .textFieldStyle(.roundedBorder)
+                .modifier(CustomTextField())
             
             HStack {
                 Button("Cancel") {
                     isPresented = false
                 }
+                .buttonStyle(InlineSecondaryButton())
                 
                 Button("Save") {
                     Task {
@@ -43,11 +44,16 @@ struct SectionEditor: View {
                     }
                 }
                 .disabled(isSaving || sectionName.isEmpty)
-                .buttonStyle(.borderedProminent)
+                .buttonStyle(InlinePrimaryButton())
             }
-            
         }
-        .border(.brown)
+        .padding(8)
+        .background(.background)
+        .overlay(
+            RoundedRectangle(cornerRadius: 8)
+                .stroke(.gray, lineWidth: 1)
+        )
+        .clipShape(RoundedRectangle(cornerRadius: 8))
     }
 }
 
