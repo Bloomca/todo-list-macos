@@ -34,8 +34,13 @@ struct ProjectActionsView: View {
                 .buttonStyle(CustomIconButtonStyle())
                 if project.archivedAt != nil {
                     Button {
-                        // TODO: add unarchiving
-                        
+                        Task {
+                            do {
+                                try await projectStore.unarchiveProject(projectId: projectId)
+                            } catch {
+                                // TODO: add some sort of notification/toast to show the error
+                            }
+                        }
                     } label: {
                         Image(systemName: "arrow.up.bin")
                     }
@@ -95,7 +100,7 @@ struct ProjectActionsView: View {
                 ConfirmationModalView(
                     title: "Archive project?",
                     confirmTitle: "Archive",
-                    description: "All its tasks and sections will be archived as well. You can unarchive it later.",
+                    description: "You can unarchive the project later, all info will be preserved.",
                     errorTitle: archivingError != nil ? "Error while archiving project" : nil,
                     onCancel: { archivingProject = false },
                     onConfirm: {

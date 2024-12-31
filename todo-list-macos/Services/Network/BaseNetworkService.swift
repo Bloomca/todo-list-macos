@@ -76,6 +76,15 @@ class BaseNetworkService {
                 let encoder = JSONEncoder()
                 encoder.keyEncodingStrategy = .convertToSnakeCase
                 request.httpBody = try encoder.encode(body)
+                
+                if let httpBody = request.httpBody {
+                    let bodyString = String(data: httpBody, encoding: .utf8)
+                    if let bodyString {
+                        print("Body as a string: \(bodyString)")
+                    } else {
+                        print("Failed to read attached body as a string")
+                    }
+                }
             }
         }
         

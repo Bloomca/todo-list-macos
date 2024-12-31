@@ -17,16 +17,25 @@ struct Project: NetworkResponse, Identifiable {
     func copyWith(
         id: Int? = nil,
         name: String? = nil,
-        description: String? = nil,
-        archivedAt: String? = nil,
-        createdAt: String? = nil
+        description: String? = nil
     ) -> Project {
         Project(
             id: id ?? self.id,
             name: name ?? self.name,
             description: description ?? self.description,
-            archivedAt: archivedAt ?? self.archivedAt,
-            createdAt: createdAt ?? self.createdAt
+            archivedAt: self.archivedAt,
+            createdAt: self.createdAt
+        )
+    }
+
+    // use this method to change archived status to avoid problems with `nil`
+    func changeArchivedStatus(_ newArchivedAt: String?) -> Project {
+        Project(
+            id: self.id,
+            name: self.name,
+            description: self.description,
+            archivedAt: newArchivedAt,
+            createdAt: self.createdAt
         )
     }
 }
@@ -88,9 +97,22 @@ class ProjectStore: ObservableObject {
         
         let currentProject = projectsById[projectId]
         if let currentProject {
-            projectsById[projectId] = currentProject.copyWith(archivedAt: "2024-12-31")
+            projectsById[projectId] = currentProject.changeArchivedStatus("2024-12-31")
         }
     }
+    
+    func unarchiveProject(projectId: Int) async throws {
+        let token = try authStore.getToken()
+        try await projectNetworkService.updateProject(
+            token: token, projectId: projectId, isArchived: false)
+        
+        let currentProject = projectsById[projectId]
+        if let currentProject {
+            projectsById[projectId] = currentProject.changeArchivedStatus(nil)
+        }
+    }
+    
+    // Selectors
 
     func getProjects() -> [Project] {
         Array(projectsById.values).filter { $0.archivedAt == nil }.sorted { $0.createdAt < $1.createdAt }
