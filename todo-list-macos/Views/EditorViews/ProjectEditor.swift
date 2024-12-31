@@ -38,7 +38,7 @@ struct ProjectEditor: View {
             
             VStack(spacing: 16) {
                 TextField("Project name", text: $projectName)
-                    .modifier(CustomTextField())
+                    .modifier(CustomTextField(shouldAutoFocus: true))
 
                 TextField("Project description (optional)", text: $projectDescription)
                     .modifier(CustomTextField())

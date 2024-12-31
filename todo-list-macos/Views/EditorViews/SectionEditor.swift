@@ -10,6 +10,8 @@ import SwiftUI
 struct SectionEditor: View {
     @EnvironmentObject var sectionStore: SectionStore
     
+    @FocusState private var isFocused: Bool
+    
     @Binding var isPresented: Bool
     
     var projectId: Int
@@ -21,7 +23,12 @@ struct SectionEditor: View {
     var body: some View {
         HStack(spacing: 8) {
             TextField("Section name", text: $sectionName)
-                .modifier(CustomTextField())
+                .focused($isFocused)
+                .padding(.horizontal, 8)
+                .padding(.vertical, 6)
+                .background(.background)
+                .cornerRadius(8)
+                .textFieldStyle(.plain)
             
             HStack {
                 Button("Cancel") {
@@ -51,9 +58,12 @@ struct SectionEditor: View {
         .background(.background)
         .overlay(
             RoundedRectangle(cornerRadius: 8)
-                .stroke(.gray, lineWidth: 1)
+                .stroke(isFocused ? .blue : .gray, lineWidth: 1)
         )
         .clipShape(RoundedRectangle(cornerRadius: 8))
+        .onAppear() {
+            isFocused = true
+        }
     }
 }
 
