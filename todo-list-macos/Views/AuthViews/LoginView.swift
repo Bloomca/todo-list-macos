@@ -25,7 +25,7 @@ struct LoginView: View {
             
             TextField("Username", text: $username)
                 .frame(width: 250)
-                .modifier(CustomTextField())
+                .modifier(CustomTextField(shouldAutoFocus: true))
             SecureField("Password", text: $password)
                 .frame(width: 250)
                 .modifier(CustomTextField())

@@ -23,7 +23,7 @@ struct TaskEditor: View {
     var body: some View {
         VStack(spacing: 8) {
             TextField("Task name", text: $taskName)
-                .modifier(CustomTextField())
+                .modifier(CustomTextField(shouldAutoFocus: true))
             TextField("Task description", text: $taskDescription)
                 .modifier(CustomTextField())
             

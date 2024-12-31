@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct CustomTextField: ViewModifier {
+    var shouldAutoFocus: Bool = false
     @FocusState private var isFocused: Bool
     func body(content: Content) -> some View {
         content
@@ -21,5 +22,10 @@ struct CustomTextField: ViewModifier {
                     .stroke(isFocused ? .blue : .gray, lineWidth: 1)
             )
             .textFieldStyle(.plain)
+            .onAppear {
+                if shouldAutoFocus {
+                    isFocused = true
+                }
+            }
     }
 }
