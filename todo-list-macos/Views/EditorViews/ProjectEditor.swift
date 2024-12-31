@@ -7,21 +7,32 @@
 
 import SwiftUI
 
-struct AddProjectView: View {
+struct ProjectEditor: View {
+    @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var projectStore: ProjectStore
     
-    @Binding var selectedId: Int?
-    @Binding var addingNewProject: Bool
+    var project: Project?
+    var onSave: ((_ project: Project) -> Void)?
     
-    @State private var isCreatingProject: Bool = false
-    @State private var creatingProjectError: Error?
+    @State private var isSavingProject: Bool = false
+    @State private var savingProjectError: Error?
     
     @State private var projectName: String = ""
     @State private var projectDescription: String = ""
     
+    init(project: Project? = nil, onSave: ((_ project: Project) -> Void)? = nil) {
+        self.project = project
+        self.onSave = onSave
+        
+        if let project {
+            _projectName = State(initialValue: project.name)
+            _projectDescription = State(initialValue: project.description)
+        }
+    }
+    
     var body: some View {
         VStack(spacing: 24) {
-            Text("Create a new project")
+            Text(project == nil ? "Create a new project" : "Edit project")
                 .font(.title2)
                 .fontWeight(.semibold)
             
@@ -33,7 +44,7 @@ struct AddProjectView: View {
                     .modifier(CustomTextField())
             }
             
-            if creatingProjectError != nil {
+            if savingProjectError != nil {
                 Text("Error during project creation")
                     .font(.subheadline)
                     .foregroundStyle(.red)
@@ -41,7 +52,7 @@ struct AddProjectView: View {
             
             HStack {
                 Button {
-                    addingNewProject = false
+                    dismiss()
                 } label: {
                     Text("Cancel")
                         .frame(minWidth: 80)
@@ -55,23 +66,32 @@ struct AddProjectView: View {
                 Button {
                     Task {
                         do {
-                            creatingProjectError = nil
-                            isCreatingProject = true
-                            let project = try await projectStore.createProject(
-                                name: projectName,
-                                description: projectDescription)
+                            savingProjectError = nil
+                            isSavingProject = true
                             
-                            selectedId = project.id
-                            isCreatingProject = false
-                            addingNewProject = false
+                            if let project {
+                                let updatedProject = try await projectStore.updateProject(
+                                    projectId: project.id, name: projectName, description: projectDescription)
+                                
+                                if let onSave { onSave(updatedProject) }
+                            } else {
+                                let project = try await projectStore.createProject(
+                                    name: projectName,
+                                    description: projectDescription)
+                                
+                                if let onSave { onSave(project) }
+                            }
+                            
+                            isSavingProject = false
+                            dismiss()
                         } catch {
-                            isCreatingProject = false
-                            creatingProjectError = error
+                            isSavingProject = false
+                            savingProjectError = error
                             print("error creating project: \(error)")
                         }
                     }
                 } label: {
-                    Text("Create")
+                    Text(project == nil ? "Create" : "Update")
                         .frame(minWidth: 80)
                         .padding(.vertical, 8)
                         .padding(.horizontal, 8)
@@ -80,7 +100,7 @@ struct AddProjectView: View {
                         .cornerRadius(8)
                 }
                 .buttonStyle(.plain)
-                .disabled(isCreatingProject || projectName.isEmpty)
+                .disabled(isSavingProject || projectName.isEmpty)
             }
         }
         .padding(24)
@@ -89,8 +109,4 @@ struct AddProjectView: View {
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 2)
     }
-}
-
-#Preview {
-    AddProjectView(selectedId: .constant(nil), addingNewProject: .constant(false))
 }

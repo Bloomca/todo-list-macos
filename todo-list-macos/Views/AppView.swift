@@ -104,8 +104,9 @@ struct AppView: View {
         }
         .navigationTitle(currentTitle)
         .sheet(isPresented: $addingNewProject) {
-            AddProjectView(selectedId: $selectedProject,
-                           addingNewProject: $addingNewProject)
+            ProjectEditor() { project in
+                selectedProject = project.id
+            }
         }
         .onAppear {
             Task {

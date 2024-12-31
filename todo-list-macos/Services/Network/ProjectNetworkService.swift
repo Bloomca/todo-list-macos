@@ -86,8 +86,6 @@ struct ProjectNetworkService {
                                            description: description,
                                            isArchived: isArchived,
                                            displayOrder: displayOrder)
-        
-        print("isArchived value is: \(request.isArchived!)")
 
         let _: EmptyResponse = try await baseNetworkService.request(
             path: "/projects/\(projectId)",
