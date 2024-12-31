@@ -20,30 +20,39 @@ struct AddProjectView: View {
     @State private var projectDescription: String = ""
     
     var body: some View {
-        VStack {
+        VStack(spacing: 24) {
             Text("Create a new project")
-                .font(.headline)
-                .padding()
+                .font(.title2)
+                .fontWeight(.semibold)
             
-            TextField("Project name", text: $projectName)
-                .textFieldStyle(.roundedBorder)
-                .frame(width: 250)
-            TextField("Project description (optional)", text: $projectDescription)
-                .textFieldStyle(.roundedBorder)
-                .frame(width: 250)
+            VStack(spacing: 16) {
+                TextField("Project name", text: $projectName)
+                    .modifier(CustomTextField())
+
+                TextField("Project description (optional)", text: $projectDescription)
+                    .modifier(CustomTextField())
+            }
             
             if creatingProjectError != nil {
                 Text("Error during project creation")
+                    .font(.subheadline)
+                    .foregroundStyle(.red)
             }
             
             HStack {
-                Button("Cancel") {
+                Button {
                     addingNewProject = false
+                } label: {
+                    Text("Cancel")
+                        .frame(minWidth: 80)
+                        .padding(.vertical, 8)
+                        .padding(.horizontal, 8)
+                        .background(.gray.opacity(0.2))
+                        .cornerRadius(8)
                 }
-                .buttonStyle(.borderedProminent)
-                .tint(.gray.opacity(0.5))
+                .buttonStyle(.plain)
 
-                Button("Create") {
+                Button {
                     Task {
                         do {
                             creatingProjectError = nil
@@ -61,13 +70,23 @@ struct AddProjectView: View {
                             print("error creating project: \(error)")
                         }
                     }
+                } label: {
+                    Text("Create")
+                        .frame(minWidth: 80)
+                        .padding(.vertical, 8)
+                        .padding(.horizontal, 8)
+                        .background(.teal)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
                 }
-                .buttonStyle(.borderedProminent)
-                .disabled(isCreatingProject)
+                .buttonStyle(.plain)
+                .disabled(isCreatingProject || projectName.isEmpty)
             }
-            .padding(.bottom, 10)
         }
-        .padding()
+        .padding(24)
+        .frame(maxWidth: 400)
+        .background(.background)
+        .clipShape(RoundedRectangle(cornerRadius: 12))
         .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 2)
     }
 }

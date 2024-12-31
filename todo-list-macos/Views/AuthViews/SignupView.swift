@@ -19,22 +19,24 @@ struct SignupView: View {
     
     var body: some View {
         VStack {
-            Text("Signup")
+            Spacer()
+            
+            Text("Sign up")
                 .font(.largeTitle)
             
             TextField("Username", text: $username)
-                .frame(width: 200)
-                .textFieldStyle(.roundedBorder)
+                .frame(width: 250)
+                .modifier(CustomTextField())
             SecureField("Password", text: $password)
-                .frame(width: 200)
-                .textFieldStyle(.roundedBorder)
+                .frame(width: 250)
+                .modifier(CustomTextField())
             
             if loginError != nil {
                 Text("Signup failed")
                     .foregroundStyle(.red)
             }
             
-            Button("Signup") {
+            Button {
                 Task {
                     do {
                         loginError = nil
@@ -53,9 +55,22 @@ struct SignupView: View {
                         print("Signup failed: \(error)")
                     }
                 }
+            } label: {
+                Text("Signup")
+                    .font(.headline)
+                    .padding(8)
+                    .frame(minWidth: 266)
+                    .background(.blue.mix(with: .teal, by: 0.5))
+                    .cornerRadius(8)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(.blue.mix(with: .teal, by: 0.3))
+                    )
             }
-            .font(.headline)
-            .disabled(isLoading)
+            .buttonStyle(.plain)
+            .disabled(isLoading || username.isEmpty || password.isEmpty)
+            
+            Spacer()
             
             HStack {
                 Text("Already have an account?")
@@ -66,9 +81,7 @@ struct SignupView: View {
                 .buttonStyle(.plain)
                 .foregroundStyle(.blue)
                 .underline(true)
-            }
-            
-                
+            }    
         }
         .padding()
     }

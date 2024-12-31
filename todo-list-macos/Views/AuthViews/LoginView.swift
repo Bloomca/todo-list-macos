@@ -19,22 +19,23 @@ struct LoginView: View {
     
     var body: some View {
         VStack {
-            Text("Log in to your account")
+            Spacer()
+            Text("Log in")
                 .font(.largeTitle)
             
             TextField("Username", text: $username)
-                .frame(width: 200)
-                .textFieldStyle(.roundedBorder)
+                .frame(width: 250)
+                .modifier(CustomTextField())
             SecureField("Password", text: $password)
-                .frame(width: 200)
-                .textFieldStyle(.roundedBorder)
+                .frame(width: 250)
+                .modifier(CustomTextField())
             
             if loginError != nil {
                 Text("Login failed")
                     .foregroundStyle(.red)
             }
             
-            Button("Log in") {
+            Button {
                 Task {
                     do {
                         loginError = nil
@@ -54,9 +55,22 @@ struct LoginView: View {
                         print("Login failed: \(error)")
                     }
                 }
+            } label: {
+                Text("Log in")
+                    .font(.headline)
+                    .padding(8)
+                    .frame(minWidth: 266)
+                    .background(.blue.mix(with: .teal, by: 0.5))
+                    .cornerRadius(8)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(.blue.mix(with: .teal, by: 0.3))
+                    )
             }
-            .font(.headline)
-            .disabled(isLoading)
+            .buttonStyle(.plain)
+            .disabled(isLoading || username.isEmpty || password.isEmpty)
+            
+            Spacer()
             
             HStack {
                 Text("Not registered yet?")
