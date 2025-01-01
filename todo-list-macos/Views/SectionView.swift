@@ -12,6 +12,7 @@ struct SectionView: View {
     @EnvironmentObject var sectionStore: SectionStore
     
     @State private var isCollapsed: Bool = false
+    @State private var isEditing: Bool = false
     
     let section: SectionEntity
     
@@ -20,19 +21,31 @@ struct SectionView: View {
     var body: some View {
         LazyVStack(spacing: 0) {
             HStack {
-                Button {
-                    isCollapsed.toggle()
-                } label: {
-                    Image(systemName: isCollapsed ? "chevron.right" : "chevron.down")
+                if isEditing {
+                    SectionEditor(isPresented: $isEditing, projectId: section.projectId, section: section)
+                } else {
+                    Button {
+                        isCollapsed.toggle()
+                    } label: {
+                        Image(systemName: isCollapsed ? "chevron.right" : "chevron.down")
+                    }
+                    .buttonStyle(CustomIconButtonStyle())
+                    .frame(width: 24, height: 24)
+                    Text(section.name)
+                        .font(.headline)
+                        .padding(.vertical, 10)
+                    Spacer()
+                    
+                    SectionActionsView(section: section, editingSection: $isEditing)
                 }
-                .buttonStyle(CustomIconButtonStyle())
-                .frame(width: 24, height: 24)
-                Text(section.name)
-                    .font(.headline)
-                    .underline()
-                Spacer()
             }
             .padding(.leading, 4)
+            .padding(.trailing, 8)
+            .background(
+                isEditing ? nil: RoundedRectangle(cornerRadius: 6)
+                    .fill(Color(nsColor: .controlBackgroundColor))
+            )
+            .padding(.bottom, 12)
             
             if !isCollapsed {
                 ForEach(tasks) { task in

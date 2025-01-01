@@ -12,6 +12,27 @@ struct CreateSectionRequest: NetworkRequest {
     let name: String
 }
 
+struct UpdateSectionRequest: NetworkRequest, Encodable {
+    var name: String?
+    var isArchived: Bool?
+    var displayOrder: Int?
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        // Only encode non-nil values
+        try name.map { try container.encode($0, forKey: .name) }
+        try isArchived.map { try container.encode($0, forKey: .isArchived) }
+        try displayOrder.map { try container.encode($0, forKey: .displayOrder) }
+    }
+    
+    private enum CodingKeys: String, CodingKey {
+        case name
+        case isArchived
+        case displayOrder
+    }
+}
+
 struct SectionNetworkService {
     private let baseNetworkService: BaseNetworkService
     
@@ -41,5 +62,31 @@ struct SectionNetworkService {
             token: token)
         
         return createdSection
+    }
+    
+    func deleteSection(token: String, sectionId: Int) async throws {
+        let _: EmptyResponse = try await baseNetworkService.request(
+            path: "/sections/\(sectionId)",
+            method: NetworkMethod.delete,
+            body: nil as EmptyBody?,
+            expectedCode: 204,
+            token: token)
+    }
+    
+    func updateSection(token: String,
+                       sectionId: Int,
+                       name: String? = nil,
+                       isArchived: Bool? = nil,
+                       displayOrder: Int? = nil) async throws {
+        let request = UpdateSectionRequest(name: name,
+                                           isArchived: isArchived,
+                                           displayOrder: displayOrder)
+
+        let _: EmptyResponse = try await baseNetworkService.request(
+            path: "/sections/\(sectionId)",
+            method: NetworkMethod.put,
+            body: request,
+            expectedCode: 204,
+            token: token)
     }
 }

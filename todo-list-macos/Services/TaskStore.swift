@@ -85,4 +85,8 @@ class TaskStore: ObservableObject {
     func onProjectDelete(projectId: Int) {
         self.tasks.removeAll { $0.projectId == projectId }
     }
+    
+    func onSectionDelete(sectionId: Int) {
+        self.tasks.removeAll { $0.sectionId == sectionId }
+    }
 }

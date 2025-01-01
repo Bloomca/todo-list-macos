@@ -7,6 +7,10 @@
 
 import Foundation
 
+enum SectionStoreError: Error {
+    case genericError(message: String)
+}
+
 struct SectionEntity: NetworkResponse, Identifiable {
     let id: Int
     let projectId: Int
@@ -14,19 +18,31 @@ struct SectionEntity: NetworkResponse, Identifiable {
     let archivedAt: String?
     let createdAt: String
     
+    func isArchived() -> Bool {
+        archivedAt != nil
+    }
+    
     func copyWith(
-        id: Int? = nil,
         projectId: Int? = nil,
-        name: String? = nil,
-        archivedAt: String? = nil,
-        createdAt: String? = nil
+        name: String? = nil
     ) -> SectionEntity {
         SectionEntity(
-            id: id ?? self.id,
+            id: self.id,
             projectId: projectId ?? self.projectId,
             name: name ?? self.name,
-            archivedAt: archivedAt ?? self.archivedAt,
-            createdAt: createdAt ?? self.createdAt
+            archivedAt: self.archivedAt,
+            createdAt: self.createdAt
+        )
+    }
+    
+    // use this method to change archived status to avoid problems with `nil`
+    func changeArchivedStatus(_ newArchivedAt: String?) -> SectionEntity {
+        SectionEntity(
+            id: self.id,
+            projectId: self.projectId,
+            name: self.name,
+            archivedAt: newArchivedAt,
+            createdAt: self.createdAt
         )
     }
 }
@@ -73,6 +89,58 @@ class SectionStore: ObservableObject {
             name: name)
         
         sections.append(newSection)
+    }
+    
+    func deleteSection(sectionId: Int, onDelete: () -> Void) async throws {
+        let token = try authStore.getToken()
+        try await sectionNetworkService.deleteSection(token: token, sectionId: sectionId)
+
+        onDelete()
+        self.sections.removeAll { $0.id == sectionId }
+    }
+    
+    func archiveSection(sectionId: Int) async throws {
+        let token = try authStore.getToken()
+        try await sectionNetworkService.updateSection(
+            token: token, sectionId: sectionId, isArchived: true)
+        
+        self.sections = self.sections.map { section in
+            if section.id == sectionId {
+                return section.changeArchivedStatus("2024-12-31")
+            }
+            
+            return section
+        }
+    }
+    
+    func unarchiveSection(sectionId: Int) async throws {
+        let token = try authStore.getToken()
+        try await sectionNetworkService.updateSection(
+            token: token, sectionId: sectionId, isArchived: false)
+        
+        self.sections = self.sections.map { section in
+            if section.id == sectionId {
+                return section.changeArchivedStatus(nil)
+            }
+            
+            return section
+        }
+    }
+    
+    func updateSection(sectionId: Int, name: String) async throws {
+        let token = try authStore.getToken()
+        
+        try await sectionNetworkService.updateSection(
+            token: token, sectionId: sectionId, name: name)
+        
+        
+        self.sections = self.sections.map { section in
+            if section.id == sectionId {
+                return section.copyWith(name: name)
+            }
+            
+            return section
+        }
     }
     
     func onProjectDelete(projectId: Int) {

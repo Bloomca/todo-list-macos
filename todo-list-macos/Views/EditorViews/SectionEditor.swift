@@ -15,10 +15,21 @@ struct SectionEditor: View {
     @Binding var isPresented: Bool
     
     var projectId: Int
+    var section: SectionEntity? = nil
     
     @State var sectionName: String = ""
     @State var isSaving: Bool = false
     @State var savingError: Error? = nil
+    
+    init(isPresented: Binding<Bool>, projectId: Int, section: SectionEntity? = nil) {
+        _isPresented = isPresented
+        self.projectId = projectId
+        self.section = section
+        
+        if let section {
+            _sectionName = State(initialValue: section.name)
+        }
+    }
     
     var body: some View {
         HStack(spacing: 8) {
@@ -41,7 +52,11 @@ struct SectionEditor: View {
                         do {
                             isSaving = true
                             savingError = nil
-                            try await sectionStore.createSection(projectId: projectId, name: sectionName)
+                            if let section {
+                                try await sectionStore.updateSection(sectionId: section.id, name: sectionName)
+                            } else {
+                                try await sectionStore.createSection(projectId: projectId, name: sectionName)
+                            }
                             isSaving = false
                             isPresented = false
                         } catch {
