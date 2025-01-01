@@ -49,11 +49,11 @@ struct ProjectView: View {
                                 SectionView(section: section)
                             }
                         }
+                        .padding(.horizontal, 12)
                     }
                 }
             }
             .frame(maxHeight: .infinity, alignment: .top)
-            .padding(.horizontal, 12)
             .onChange(of: projectId) {
                 Task {
                     await sectionStore.fetchProjectSections(projectId: projectId)
